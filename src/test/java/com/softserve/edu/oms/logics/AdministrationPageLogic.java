@@ -2,9 +2,10 @@ package com.softserve.edu.oms.logics;
 
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.pages.AdministrationPage;
-import com.softserve.edu.oms.pages.LoginPage;
 import com.softserve.edu.oms.pages.AdministrationPage.AdministrationPageConditions;
 import com.softserve.edu.oms.pages.AdministrationPage.AdministrationPageFields;
+import com.softserve.edu.oms.pages.CreateNewUserPage;
+import com.softserve.edu.oms.pages.LoginPage;
 
 public class AdministrationPageLogic {
 	// Elements
@@ -24,8 +25,8 @@ public class AdministrationPageLogic {
 
 	public CreateNewUserPageLogic gotoCreateNewUser() {
 		this.administrationPage.getCreateNewUser().click();
-		// TODO CreateNewUserPageLogic(new CreateNewUserPage());
-		return new CreateNewUserPageLogic();
+		return new CreateNewUserPageLogic(new CreateNewUserPage());
+		//return new CreateNewUserPageLogic();
 	}
 
 	public void searchByLoginName(AdministrationPageFields field,
