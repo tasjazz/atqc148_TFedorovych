@@ -29,7 +29,7 @@ public class LoginTest {
 	public Object[][] invalidProvider() {
 		return new Object[][] { {
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString(),
+				Urls.LOCAL_HOST.toString(),
 				UserRepository.getInvalidUser() },
 		// { BrowserRepository.getChromeByTemporaryProfile() }
 		};
@@ -54,7 +54,7 @@ public class LoginTest {
 	public Object[][] adminProvider() {
 		return new Object[][] { {
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString(),
+				Urls.LOCAL_HOST.toString(),
 				UserRepository.getAdminUser() },
 		// { BrowserRepository.getChromeByTemporaryProfile() }
 		};
@@ -80,7 +80,7 @@ public class LoginTest {
 	public Object[][] customerProvider() {
 		return new Object[][] { {
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString(),
+				Urls.LOCAL_HOST.toString(),
 				UserRepository.getCustomerUser() },
 		// { BrowserRepository.getChromeByTemporaryProfile() }
 		};
@@ -107,7 +107,7 @@ public class LoginTest {
 	public Object[][] searchProvider() {
 		return new Object[][] { {
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString(),
+				Urls.LOCAL_HOST.toString(),
 				UserRepository.getSearchUser() },
 		// { BrowserRepository.getChromeByTemporaryProfile() }
 		};
@@ -142,7 +142,7 @@ public class LoginTest {
 	public Object[][] propertiesProvider() {
 		return new Object[][] { {
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString(),
+				Urls.LOCAL_HOST.toString(),
 				UserRepository.getUserFromProperties() },
 		// { BrowserRepository.getChromeByTemporaryProfile() }
 		};
@@ -180,18 +180,18 @@ public class LoginTest {
 	public Object[][] CSVProvider() {
 		return ListUtils.toMultiArray(UserRepository.getAllUserFromCSV(),
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString());
+				Urls.LOCAL_HOST.toString());
 	}
 
 	@DataProvider
 	public Object[][] ExcelProvider() {
 		return ListUtils.toMultiArray(UserRepository.getAllUserFromExcel(),
 				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.SSU_HOST.toString());
+				Urls.LOCAL_HOST.toString());
 	}
 
-	//@Test(dataProvider = "CSVProvider")
-	@Test(dataProvider = "ExcelProvider")
+	@Test(dataProvider = "CSVProvider")
+//	@Test(dataProvider = "ExcelProvider")
 	public void checkUsers(IBrowser browser, String url, IUser user) {
 		// Preconditions
 		// Steps

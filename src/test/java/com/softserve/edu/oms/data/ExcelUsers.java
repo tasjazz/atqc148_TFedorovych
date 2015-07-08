@@ -26,11 +26,11 @@ public class ExcelUsers {
 					.setRole(row.get(6))
 					.build());
 		}
-		// TODO Delete first rows if header is present
-		if ((users.get(0).getLoginName().toLowerCase().equals("login name"))
-			&& (users.get(0).getFirstName().toLowerCase().equals("first name"))) {
-			users.remove(0);
-		}
+//		// TODO Delete first rows if header is present
+//		if ((users.get(0).getLoginName().toLowerCase().equals("login name"))
+//			&& (users.get(0).getFirstName().toLowerCase().equals("first name"))) {
+//			users.remove(0);
+//		}
 		return users;
 	}
 
