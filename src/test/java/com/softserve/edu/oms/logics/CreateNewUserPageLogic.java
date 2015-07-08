@@ -52,7 +52,6 @@ public class CreateNewUserPageLogic {
 		this.createNewUserPage.getCreateButton().click();
 	}
 	
-	
 	public void setAllUserData(IUser user){
 		setLoginNameField(user.getLoginName());
 		setFirstNameField(user.getFirstName());
@@ -61,9 +60,9 @@ public class CreateNewUserPageLogic {
 		setConfirmPasswordField(user.getPassword());
 		setEmailField(user.getEmail());
 	}
+	
 	public void createNewUser(IUser user){
 		setAllUserData(user);
 		clickCreateButton();
-		
 	}
 }
