@@ -190,7 +190,7 @@ public class LoginTest {
 				Urls.LOCAL_HOST.toString());
 	}
 
-	@Test(dataProvider = "CSVProvider")
+//	@Test(dataProvider = "CSVProvider")
 //	@Test(dataProvider = "ExcelProvider")
 	public void checkUsers(IBrowser browser, String url, IUser user) {
 		// Preconditions

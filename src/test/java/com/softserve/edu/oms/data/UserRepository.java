@@ -65,6 +65,18 @@ public class UserRepository {
 				.setRole("Customer")
 				.build();
 	}
+	
+	public static IUser getBlankDefaultUser() {
+		return User.get()
+				.setLoginName("")
+				.setFirstName("")
+				.setLastName("")
+				.setPassword("")
+				.setEmail("")
+				.setRegion("North")
+				.setRole("Administrator")
+				.build();
+	}
 
 	public static IUser getUserFromProperties() {
 		return (new PropertiesUser()).getUser();

@@ -2,6 +2,7 @@ package com.softserve.edu.oms.logics;
 
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.pages.CreateNewUserPage;
+import com.softserve.edu.oms.pages.CreateNewUserPage.CreateNewUserPageRegion;
 import com.softserve.edu.oms.pages.LoginPage;
 
 public class CreateNewUserPageLogic {
@@ -19,15 +20,12 @@ public class CreateNewUserPageLogic {
 		return createNewUserPage;
 	}
 	
-//	public LoginPageLogic logout() {
-//		this.administrationPage.getLogout().click();
-//		return new LoginPageLogic(new LoginPage());
-//	}
-	
 	public LoginPageLogic logout(){
 		this.createNewUserPage.getLogout().click();
 		return new LoginPageLogic(new LoginPage());
 	}
+	
+	// setters
 	
 	public void setLoginNameField(String text){
 		this.createNewUserPage.getLoginNameField().sendKeys(text);
@@ -47,6 +45,9 @@ public class CreateNewUserPageLogic {
 	public void setEmailField(String text){
 		this.createNewUserPage.getEmailField().sendKeys(text);
 	}
+	public void setRegionSelect(CreateNewUserPageRegion region){
+		this.createNewUserPage.selectRegion(region);
+	}
 	
 	public void clickCreateButton(){
 		this.createNewUserPage.getCreateButton().click();
@@ -59,6 +60,8 @@ public class CreateNewUserPageLogic {
 		setPasswordField(user.getPassword());
 		setConfirmPasswordField(user.getPassword());
 		setEmailField(user.getEmail());
+		setRegionSelect(CreateNewUserPageRegion.WEST);
+		//TODO change it
 	}
 	
 	public void createNewUser(IUser user){
