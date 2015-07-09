@@ -26,7 +26,7 @@ public class CreateNewUserPageTest {
 	}
 	
 
-//	@Test(dataProvider = "adminProvider")
+	@Test(dataProvider = "adminProvider")
 	public void checkIfCreateNewUserLinkIsPressentAndPageExist(IBrowser browser,
 			String url, IUser adminUser) {
 		

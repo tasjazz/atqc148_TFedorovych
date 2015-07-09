@@ -11,6 +11,7 @@
 					<include name="checkUserProperties" />
 					 -->
 					<include name="checkIfCreateNewUserLinkIsPressentAndPageExist" />
+					<include name="checkIfCreateNewUserPageHasAllCorrectFields" />
 				</methods>
 			</class>
 		</classes>
