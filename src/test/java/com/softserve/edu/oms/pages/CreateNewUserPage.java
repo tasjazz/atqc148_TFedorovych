@@ -4,10 +4,12 @@ import com.softserve.edu.atqc.controls.Button;
 import com.softserve.edu.atqc.controls.IButton;
 import com.softserve.edu.atqc.controls.ILabel;
 import com.softserve.edu.atqc.controls.ILink;
+import com.softserve.edu.atqc.controls.IRadioButtonGroup;
 import com.softserve.edu.atqc.controls.ISelect;
 import com.softserve.edu.atqc.controls.ITextField;
 import com.softserve.edu.atqc.controls.Label;
 import com.softserve.edu.atqc.controls.Link;
+import com.softserve.edu.atqc.controls.RadioButtonGroup;
 import com.softserve.edu.atqc.controls.Select;
 import com.softserve.edu.atqc.controls.TextField;
 
@@ -69,7 +71,8 @@ public static enum EmailValidators{
 		public final ITextField passwordField;
 		public final ITextField confirmPasswordField;
 		public final ITextField emailField;
-		public final ISelect region;
+		public final ISelect regionSelect;
+		public final IRadioButtonGroup roleRadioButtons;
 		public final IButton createButton;
 		public final IButton cancelButton;
 		public final ILink logout;
@@ -81,7 +84,8 @@ public static enum EmailValidators{
 			this.passwordField = TextField.getById("password");
 			this.confirmPasswordField = TextField.getById("confirmPassword");
 			this.emailField = TextField.getById("email");
-			this.region = Select.getById("regionID");
+			this.regionSelect = Select.getById("regionID");
+			this.roleRadioButtons = RadioButtonGroup.getByName("roleID");
 			this.createButton = Button.getByXpath("/html/body/div/div/div[3]/div/div/form/input[4]");
 			this.cancelButton = Button.getByXpath("/html/body/div/div/div[3]/div/div/form/input[5]");
 			this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
@@ -145,9 +149,15 @@ public static enum EmailValidators{
 	public IButton getCancelButton(){
 		return this.controls.cancelButton;
 	}
+	public ISelect getRegionSelect(){
+		return this.controls.regionSelect;
+	}
+	public IRadioButtonGroup getRoleRadioButtons(){
+		return this.controls.roleRadioButtons;
+	}
 	
 	//setters controls
 	public void selectRegion(CreateNewUserPageRegion region){
-		this.controls.region.selectByVisibleText(region.toString());
+		this.controls.regionSelect.selectByVisibleText(region.toString());
 	}
 }
