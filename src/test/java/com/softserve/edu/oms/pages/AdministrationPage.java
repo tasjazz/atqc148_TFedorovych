@@ -90,7 +90,7 @@ public class AdministrationPage {
 				this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
 			}
 		}
-
+/*
 		public AdministrationPageUIMapAjax(String login) {
 			this.usersFound = Label.getById("usersFound");
 			//
@@ -101,9 +101,9 @@ public class AdministrationPage {
 			this.createNewUser = Link.getByPartialLinkText("Create New User");
 			this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
 		}
+ */
 
 	}
-
     // Elements
     private AdministrationPageUIMap controls;
 	// AJAX Elements
@@ -209,7 +209,8 @@ public class AdministrationPage {
 	
 	public void resetTable(String login) {
 //		if (this.controlsAjax.firstName.isStalenessOf()) {
-			controlsAjax = new AdministrationPageUIMapAjax(login);
+//			controlsAjax = new AdministrationPageUIMapAjax(login);
+			controlsAjax = new AdministrationPageUIMapAjax();
 //		}
 	}
 	

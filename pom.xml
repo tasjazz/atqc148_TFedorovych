@@ -12,6 +12,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
+		<net.sourceforge.jtds.version>1.2.4</net.sourceforge.jtds.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.seleniumhq.version>2.46.0</org.seleniumhq.version>
 		<testng.reports.directory>./target/surefire-reports/test-output</testng.reports.directory>
@@ -42,6 +43,11 @@
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
 			<version>2.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>${net.sourceforge.jtds.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -6,8 +6,10 @@ import org.testng.annotations.Test;
 
 import com.softserve.edu.atqc.span.AssertWrapper;
 import com.softserve.edu.atqc.tools.BrowserRepository;
+import com.softserve.edu.atqc.tools.DataSource;
 import com.softserve.edu.atqc.tools.IBrowser;
 import com.softserve.edu.atqc.tools.WebDriverUtils;
+import com.softserve.edu.oms.data.DataSourceRepository;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.UrlRepository.Urls;
 import com.softserve.edu.oms.data.UserRepository;
@@ -42,11 +44,13 @@ public class CreateNewUserPageTest {
 		return new Object[][] { {
 			BrowserRepository.getFirefoxByTemporaryProfile(),
 			Urls.LOCAL_HOST.toString(),
-			UserRepository.getNewUser() },
+			UserRepository.getNewUser(),
+			DataSourceRepository.getJtdsMsSqlLocalHostOms()
+			},
 		};
 	}
 
-//	@Test(dataProvider = "adminProvider")
+	@Test(dataProvider = "adminProvider")
 	public void checkIfCreateNewUserLinkIsPressentAndPageExist(IBrowser browser,
 			String url, IUser adminUser) {
 		
@@ -57,7 +61,7 @@ public class CreateNewUserPageTest {
 	}
 	
 	
-//	@Test(dataProvider = "blankUser")
+	@Test(dataProvider = "blankUser")
 	public void checkIfCreateNewUserPageHasAllCorrectFields(IBrowser browser,
 			String url, IUser blankUser) {
 		
@@ -97,30 +101,40 @@ public class CreateNewUserPageTest {
 		createNewUserPageLogic.logout();
 	}
 	
-//	@Test(dataProvider = "newUser")
+	@Test(dataProvider = "newUser")
 	public void checkCreateButtonNewUserPage(IBrowser browser,
-			String url, IUser newUser) {
+			String url, IUser newUser, DataSource dataSource) {
 		
 		//preconditions
 		AdministrationPageLogic administrationPageLogic = StartApplication.load(browser, url)
 				  .successAdminLogin(UserRepository.getAdminUser())
 				  .gotoAdministration();
 		administrationPageLogic.deleteByLoginName(newUser);
+	
 		//Test
+
 		CreateNewUserPageLogic createNewUserPageLogic = administrationPageLogic.gotoCreateNewUser();
 		administrationPageLogic = createNewUserPageLogic.createNewUser(newUser);
 		administrationPageLogic.searchByLoginName(AdministrationPageFields.LOGIN_NAME, 
 				AdministrationPageConditions.STARTS_WITH, newUser);
 		
+		IUser searchUserFromDB = UserRepository.getUserFromDB(dataSource, newUser.getLoginName());
+
 		AssertWrapper.get().
 		forElement(administrationPageLogic.getAdministrationPage().getUsersFound())
 		.valueMatch(1)
 		.next()
 		.forElement(administrationPageLogic.getAdministrationPage().getFirstName())
 		.valueMatch(newUser.getFirstName())
+		.valueMatch(searchUserFromDB.getFirstName())
 		.next()
 		.forElement(administrationPageLogic.getAdministrationPage().getLastName())
 		.valueMatch(newUser.getLastName())
+		.valueMatch(searchUserFromDB.getLastName())
+		.next()
+		.forElement(administrationPageLogic.getAdministrationPage().getLogin())
+		.valueMatch(newUser.getLoginName())
+		.valueMatch(searchUserFromDB.getLoginName())
 		.next()
 		.check();
 
@@ -131,7 +145,7 @@ public class CreateNewUserPageTest {
 	
 	@Test(dataProvider = "newUser")
 	public void checkCancelButtonNewUserPage(IBrowser browser,
-			String url, IUser newUser) {
+			String url, IUser newUser, DataSource dataSource) {
 		
 		//preconditions
 		AdministrationPageLogic administrationPageLogic = StartApplication.load(browser, url)
@@ -146,15 +160,14 @@ public class CreateNewUserPageTest {
 		administrationPageLogic.searchByLoginName(AdministrationPageFields.LOGIN_NAME, 
 				AdministrationPageConditions.STARTS_WITH, newUser);
 		
-//		AssertWrapper.get().
-//		forElement(administrationPageLogic.getAdministrationPage().getUsersFound())
-//		.valueMatch(0)
-//		.next()
-//		.check();
+		AssertWrapper.get().
+		forElement(administrationPageLogic.getAdministrationPage().getUsersFound())
+		.valueMatch(0)
+		.next()
+		.check();
 		
 		//logout
 		administrationPageLogic.logout();
-		
 	}
 	
 	
