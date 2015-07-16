@@ -28,12 +28,28 @@ public class CreateNewUserPage {
             return this.field;
         }
     }
-public static enum EmailValidators{
-		
+	
+	public static enum LoginNameValidators{
 		ALREADY_IN_USE("already in use"),
-		YOU_SHOULD_USE_VALID_EMAIL_ADDRESS("You should use valid email address"),
-		LOGIN_NAME_CANNOT_CONTAIN_DIGITS("Login name cannot contain digits"),
-		LOGIN_NAME_IS_TOO_LONG("Login name is too long");
+		LOGIN_NAME_IS_TOO_LONG("Login name is too long"),
+		LOGIN_CANNOT_BE_BLANK("Login cannot be blank"),
+		LOGIN_NAME_CANNOT_CONTAIN_DIGITS("Login name cannot contain digits");
+		
+		private String field;
+		
+		private LoginNameValidators(String field) {
+			this.field = field;
+		}
+		
+		@Override
+		public String toString() {
+			return this.field;
+		}
+	}
+	
+	public static enum EmailValidators{
+		
+		YOU_SHOULD_USE_VALID_EMAIL_ADDRESS("You should use valid email address");
 		
 		private String field;
 
@@ -46,23 +62,6 @@ public static enum EmailValidators{
 			return this.field;
 		}
 	}
-	
-	public static enum LoginNameValidators{
-		LOGIN_NAME_IS_TOO_LONG("Login name is too long"),
-		LOGIN_CANNOT_BE_BLANK("Login cannot be blank");
-		
-		private String field;
-
-		private LoginNameValidators(String field) {
-			this.field = field;
-		}
-
-		@Override
-		public String toString() {
-			return this.field;
-		}
-	}
-	
 	
 	private class CreateNewUserPageUIMap {
 		public final ITextField loginNameField;
@@ -101,12 +100,21 @@ public static enum EmailValidators{
 		public final ILabel emailNameValidator;
 		
 		public CreateNewUserPageUIMapValidators (){
-			this.loginNameValidator = Label.getById("nameError");
-			this.firstNameValidator = Label.getById("firstNameError");
-			this.lastNameValidator = Label.getById("lastNameError");
-			this.passwordValidator = Label.getById("passwordError");
-			this.confirmPasswordValidator = Label.getById("confirmError");
-			this.emailNameValidator = Label.getById("emailError");
+			
+			this.loginNameValidator = Label.getPresentById("nameError");
+			this.firstNameValidator = Label.getPresentById("firstNameError");
+			this.lastNameValidator = Label.getPresentById("lastNameError");
+			this.passwordValidator = Label.getPresentById("passwordError");
+			this.confirmPasswordValidator = Label.getPresentById("confirmError");
+			this.emailNameValidator = Label.getPresentById("emailError");
+			
+			System.out.println("++++++++Allert: "+ loginNameValidator.getText());
+			System.out.println("++++++++Allert: "+ firstNameValidator.getText());
+			System.out.println("++++++++Allert: "+ lastNameValidator.getText());
+			System.out.println("++++++++Allert: "+ passwordValidator.getText());
+			System.out.println("++++++++Allert: "+ confirmPasswordValidator.getText());
+			System.out.println("++++++++Allert: "+ emailNameValidator.getText());
+								
 		}
 	}
 	
@@ -117,7 +125,10 @@ public static enum EmailValidators{
 
 	public CreateNewUserPage() {
 		 controls = new CreateNewUserPageUIMap();
-//		 controlsValidator = new CreateNewUserPageUIMapValidators();
+	}
+	
+	public CreateNewUserPageUIMapValidators getCreateNewUserPageUIMapValidators(){
+		return new CreateNewUserPageUIMapValidators();
 	}
 	
 	// getters controls
@@ -160,4 +171,5 @@ public static enum EmailValidators{
 	public void selectRegion(CreateNewUserPageRegion region){
 		this.controls.regionSelect.selectByVisibleText(region.toString());
 	}
+	
 }

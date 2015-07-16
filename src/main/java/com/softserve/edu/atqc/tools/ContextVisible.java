@@ -119,7 +119,8 @@ public final class ContextVisible {
 	 * Do not mix implicit and explicit waits.
 	 */
 	public boolean isStalenessOfWebElement(ControlWrapper controlWrapper) {
-		WebDriverUtils.get().setImplicitlyWaitTimeout(0L);
+//		WebDriverUtils.get().setImplicitlyWaitTimeout(0L); //yaroslav vers
+		WebDriverUtils.get().setImplicitlyWaitTimeout(1L); // my vers
 		Boolean stalenessOfWebElement = new WebDriverWait(
 				WebDriverUtils.get().getWebDriver(),
 				WebDriverUtils.get().getImplicitlyWaitTimeout())

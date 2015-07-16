@@ -26,7 +26,7 @@ public class AdministrationPageLogic {
 	public CreateNewUserPageLogic gotoCreateNewUser() {
 		this.administrationPage.getCreateNewUser().click();
 		return new CreateNewUserPageLogic(new CreateNewUserPage());
-		//return new CreateNewUserPageLogic();
+		// return new CreateNewUserPageLogic();
 	}
 
 	public void searchByLoginName(AdministrationPageFields field,
@@ -35,16 +35,28 @@ public class AdministrationPageLogic {
 		this.administrationPage.selectMatchConditions(condition);
 		this.administrationPage.searchFieldSendKeys(user.getLoginName());
 		// Initialize AJAX Elements
-		this.administrationPage.resetTable(user.getLoginName());
+		 this.administrationPage.resetTable(user.getLoginName()); //yaroslVer
+		this.administrationPage.resetTable(); // my version
 	}
 
 	public void deleteByLoginName(IUser user) {
 		searchByLoginName(AdministrationPageFields.LOGIN_NAME,
 				AdministrationPageConditions.STARTS_WITH, user);
-		this.administrationPage.deleteClick();
-		this.administrationPage.alertAccept();
+			if (getNumberOfUsersFound() > 0) {
+				System.out.println("Users =  " + getNumberOfUsersFound());
+				this.administrationPage.deleteClick();
+				this.administrationPage.alertAccept();
+				this.administrationPage.resetTable();
+			} else {System.out.println("Users = " + getNumberOfUsersFound());};
+			this.administrationPage.resetTable();
+			this.administrationPage.resetCreateNewUserLink();
 	}
 	
+	public Integer getNumberOfUsersFound() {
+		return Integer.parseInt(this.administrationPage.getUsersFound()
+				.getText());
+	}
+
 	public LoginPageLogic logout() {
 		this.administrationPage.getLogout().click();
 		return new LoginPageLogic(new LoginPage());

@@ -42,6 +42,10 @@ public class Component implements IControlWrapper {
 	public static IControlWrapper getById(String id) {
 		return get(ControlLocation.getById(id));
 	}
+	
+	public static IControlWrapper getPresentById(String id) {
+		return getPresent(ControlLocation.getById(id));
+	}
 
 	public static IControlWrapper getByName(String name) {
 		return get(ControlLocation.getByName(name));
@@ -63,6 +67,13 @@ public class Component implements IControlWrapper {
 		// TODO Change strategy Visible/Present
 		return getByControl(
 				ControlWrapper.getVisibleWebElement(controlLocation),
+				controlLocation);
+	}
+	
+	static IControlWrapper getPresent(ControlLocation controlLocation) {
+		// TODO Change strategy Visible/Present
+		return getByControl(
+				ControlWrapper.getPresentWebElement(controlLocation),
 				controlLocation);
 	}
 

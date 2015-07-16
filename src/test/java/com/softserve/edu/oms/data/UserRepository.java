@@ -43,13 +43,13 @@ public class UserRepository {
 
 	public static IUser getNewUser() {
 		return User.get()
-				.setLoginName("aabb")
-				.setFirstName("firstName1")
-				.setLastName("lastName1")
+				.setLoginName("aabbc")
+				.setFirstName("firstName")
+				.setLastName("lastName")
 				.setPassword("qwerty")
 				.setEmail("mail@gmail.com")
 				.setRegion("East")
-				.setRole("Customer")
+				.setRole("Administrator")
 				.build();
 		//return new User("aabb","firstName1","lastName1","qwerty","mail@gmail.com","East","Customer");
 	}

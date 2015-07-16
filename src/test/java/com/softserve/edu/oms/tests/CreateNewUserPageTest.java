@@ -11,7 +11,10 @@ import com.softserve.edu.atqc.tools.WebDriverUtils;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.UrlRepository.Urls;
 import com.softserve.edu.oms.data.UserRepository;
+import com.softserve.edu.oms.logics.AdministrationPageLogic;
 import com.softserve.edu.oms.logics.CreateNewUserPageLogic;
+import com.softserve.edu.oms.pages.AdministrationPage.AdministrationPageConditions;
+import com.softserve.edu.oms.pages.AdministrationPage.AdministrationPageFields;
 import com.softserve.edu.oms.spans.StartApplication;
 
 public class CreateNewUserPageTest {
@@ -25,8 +28,25 @@ public class CreateNewUserPageTest {
 		};
 	}
 	
+	@DataProvider
+	public Object[][] blankUser() {
+		return new Object[][] { {
+			BrowserRepository.getFirefoxByTemporaryProfile(),
+			Urls.LOCAL_HOST.toString(),
+			UserRepository.getBlankDefaultUser() },
+		};
+	}
+	
+	@DataProvider
+	public Object[][] newUser() {
+		return new Object[][] { {
+			BrowserRepository.getFirefoxByTemporaryProfile(),
+			Urls.LOCAL_HOST.toString(),
+			UserRepository.getNewUser() },
+		};
+	}
 
-	@Test(dataProvider = "adminProvider")
+//	@Test(dataProvider = "adminProvider")
 	public void checkIfCreateNewUserLinkIsPressentAndPageExist(IBrowser browser,
 			String url, IUser adminUser) {
 		
@@ -36,16 +56,8 @@ public class CreateNewUserPageTest {
 		createNewUserPageLogic.logout();
 	}
 	
-	@DataProvider
-	public Object[][] blankUser() {
-		return new Object[][] { {
-				BrowserRepository.getFirefoxByTemporaryProfile(),
-				Urls.LOCAL_HOST.toString(),
-				UserRepository.getBlankDefaultUser() },
-		};
-	}
 	
-	@Test(dataProvider = "blankUser")
+//	@Test(dataProvider = "blankUser")
 	public void checkIfCreateNewUserPageHasAllCorrectFields(IBrowser browser,
 			String url, IUser blankUser) {
 		
@@ -83,6 +95,66 @@ public class CreateNewUserPageTest {
 		
 		//logout
 		createNewUserPageLogic.logout();
+	}
+	
+//	@Test(dataProvider = "newUser")
+	public void checkCreateButtonNewUserPage(IBrowser browser,
+			String url, IUser newUser) {
+		
+		//preconditions
+		AdministrationPageLogic administrationPageLogic = StartApplication.load(browser, url)
+				  .successAdminLogin(UserRepository.getAdminUser())
+				  .gotoAdministration();
+		administrationPageLogic.deleteByLoginName(newUser);
+		//Test
+		CreateNewUserPageLogic createNewUserPageLogic = administrationPageLogic.gotoCreateNewUser();
+		administrationPageLogic = createNewUserPageLogic.createNewUser(newUser);
+		administrationPageLogic.searchByLoginName(AdministrationPageFields.LOGIN_NAME, 
+				AdministrationPageConditions.STARTS_WITH, newUser);
+		
+		AssertWrapper.get().
+		forElement(administrationPageLogic.getAdministrationPage().getUsersFound())
+		.valueMatch(1)
+		.next()
+		.forElement(administrationPageLogic.getAdministrationPage().getFirstName())
+		.valueMatch(newUser.getFirstName())
+		.next()
+		.forElement(administrationPageLogic.getAdministrationPage().getLastName())
+		.valueMatch(newUser.getLastName())
+		.next()
+		.check();
+
+		//logout
+		administrationPageLogic.logout();
+	}
+	
+	
+	@Test(dataProvider = "newUser")
+	public void checkCancelButtonNewUserPage(IBrowser browser,
+			String url, IUser newUser) {
+		
+		//preconditions
+		AdministrationPageLogic administrationPageLogic = StartApplication.load(browser, url)
+				  .successAdminLogin(UserRepository.getAdminUser())
+				  .gotoAdministration();		
+		administrationPageLogic.deleteByLoginName(newUser);
+	
+		//Test
+		CreateNewUserPageLogic createNewUserPageLogic = administrationPageLogic.gotoCreateNewUser();
+		createNewUserPageLogic.setAllUserData(newUser);
+		administrationPageLogic = createNewUserPageLogic.clickCancelButton();
+		administrationPageLogic.searchByLoginName(AdministrationPageFields.LOGIN_NAME, 
+				AdministrationPageConditions.STARTS_WITH, newUser);
+		
+//		AssertWrapper.get().
+//		forElement(administrationPageLogic.getAdministrationPage().getUsersFound())
+//		.valueMatch(0)
+//		.next()
+//		.check();
+		
+		//logout
+		administrationPageLogic.logout();
+		
 	}
 	
 	

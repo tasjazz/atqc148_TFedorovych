@@ -24,6 +24,13 @@ public final class ControlWrapper {
 				controlLocation));
 	}
 	
+//	public static ControlWrapper getPresentWebElement(
+//			ControlLocation controlLocation) {
+//		return new ControlWrapper(ContextVisible.get().getPresentWebElement(
+//				controlLocation));
+//	}
+	
+	
 	public static List<ControlWrapper> getVisibleWebElements(
 			ControlLocation controlLocation) {
 		List<ControlWrapper> controlWrappers = new ArrayList<ControlWrapper>();

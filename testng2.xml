@@ -12,6 +12,8 @@
 					 -->
 					<include name="checkIfCreateNewUserLinkIsPressentAndPageExist" />
 					<include name="checkIfCreateNewUserPageHasAllCorrectFields" />
+					<include name="checkCreateButtonNewUserPage" />
+					<include name="checkCancelButtonNewUserPage" />
 				</methods>
 			</class>
 		</classes>

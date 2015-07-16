@@ -1,6 +1,7 @@
 package com.softserve.edu.oms.logics;
 
 import com.softserve.edu.oms.data.IUser;
+import com.softserve.edu.oms.pages.AdministrationPage;
 import com.softserve.edu.oms.pages.CreateNewUserPage;
 import com.softserve.edu.oms.pages.CreateNewUserPage.CreateNewUserPageRegion;
 import com.softserve.edu.oms.pages.LoginPage;
@@ -52,6 +53,10 @@ public class CreateNewUserPageLogic {
 	public void clickCreateButton(){
 		this.createNewUserPage.getCreateButton().click();
 	}
+	public AdministrationPageLogic clickCancelButton(){
+		this.createNewUserPage.getCancelButton().click();
+		return new AdministrationPageLogic(new AdministrationPage());
+	}
 	
 	public void setAllUserData(IUser user){
 		setLoginNameField(user.getLoginName());
@@ -61,11 +66,14 @@ public class CreateNewUserPageLogic {
 		setConfirmPasswordField(user.getPassword());
 		setEmailField(user.getEmail());
 		setRegionSelect(CreateNewUserPageRegion.WEST);
-		//TODO change it
+		//TODO change setRegionSelect
 	}
 	
-	public void createNewUser(IUser user){
+	public AdministrationPageLogic createNewUser(IUser user){
 		setAllUserData(user);
+		// TODO wait for all error hides
+		this.createNewUserPage.getCreateNewUserPageUIMapValidators();
 		clickCreateButton();
+		return new AdministrationPageLogic(new AdministrationPage());
 	}
 }

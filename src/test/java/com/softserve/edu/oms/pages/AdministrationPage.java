@@ -1,5 +1,6 @@
 package com.softserve.edu.oms.pages;
 
+import com.softserve.edu.atqc.controls.Alert;
 import com.softserve.edu.atqc.controls.ILabel;
 import com.softserve.edu.atqc.controls.ILink;
 import com.softserve.edu.atqc.controls.ISelect;
@@ -47,7 +48,7 @@ public class AdministrationPage {
 	}
 
 	private class AdministrationPageUIMap {
-		public final ILink createNewUser;
+//		public final ILink createNewUser;
 		public final ISelect field;
 		public final ISelect condition;
 		public final ITextField searchField;
@@ -57,7 +58,7 @@ public class AdministrationPage {
 			this.searchField = TextField.getById("searchField");
 			this.field = Select.getById("field");
 			this.condition = Select.getById("condition");
-			this.createNewUser = Link.getByPartialLinkText("Create New User");
+//			this.createNewUser = Link.getByPartialLinkText("Create New User");
 			this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
 		}
 	}
@@ -68,6 +69,8 @@ public class AdministrationPage {
 		public final ILabel lastName;
 		public final ILabel login;
 		public final ILink delete;
+		public  ILink createNewUser;
+		public final ILink logout;
 
 		public AdministrationPageUIMapAjax() {
 			this.usersFound = Label.getById("usersFound");
@@ -76,11 +79,15 @@ public class AdministrationPage {
 				this.lastName = Label.getByXpath("//tbody/tr[1]/td[2]");
 				this.login = Label.getByXpath("//tbody/tr[1]/td[3]");
 				this.delete = Link.getByXpath("//tbody/tr[1]/td[7]/a");
+				this.createNewUser = Link.getByPartialLinkText("Create New User");
+				this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
 			} else {
 				this.firstName = Label.getByXpath("//thead/tr[1]/th[1]");
 				this.lastName = Label.getByXpath("//thead/tr[1]/th[2]");
 				this.login = Label.getByXpath("//thead/tr[1]/th[3]");
 				this.delete = Link.getByXpath("//thead/tr[1]/th[1]");
+				this.createNewUser = Link.getByPartialLinkText("Create New User");
+				this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
 			}
 		}
 
@@ -91,6 +98,8 @@ public class AdministrationPage {
 			this.lastName = Label.getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[1]");
 			this.firstName = Label.getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[2]");
 			this.delete = Link.getByXpath("//tbody//td[3][text()='" + login + "']/following-sibling::td[4]/a");
+			this.createNewUser = Link.getByPartialLinkText("Create New User");
+			this.logout = Link.getByXpath("//a[@href='/OMS/logout.htm']");
 		}
 
 	}
@@ -110,7 +119,7 @@ public class AdministrationPage {
     // getters controls
 
 	public ILink getCreateNewUser() {
-		return this.controls.createNewUser;
+		return this.controlsAjax.createNewUser;
 	}
 
 	public ISelect getField() {
@@ -126,7 +135,7 @@ public class AdministrationPage {
 	}
 
 	public ILink getLogout() {
-		return this.controls.logout;
+		return this.controlsAjax.logout;
 	}
 
     // getters controlsAjax
@@ -162,7 +171,7 @@ public class AdministrationPage {
 	// setters controls
 
 	public void createNewUserClick() {
-		this.controls.createNewUser.click();
+		this.controlsAjax.createNewUser.click();
 	}
 
 	public void selectColumnFields(AdministrationPageFields field) {
@@ -182,28 +191,35 @@ public class AdministrationPage {
 	}
 	
 	public void searchFieldSendKeys(String text) {
+		this.controls.searchField.clear();
 		this.controls.searchField.sendKeys(text);
 	}
 
 	public void logoutClick() {
-		this.controls.logout.click();
+		this.controlsAjax.logout.click();
 	}
 	
 	// setters controlsAjax
 
 	public void resetTable() {
-		if (this.controlsAjax.firstName.isStalenessOf()) {
+//		if (this.controlsAjax.firstName.isStalenessOf()) {
 			controlsAjax = new AdministrationPageUIMapAjax();
-		}
+//		}
 	}
 	
 	public void resetTable(String login) {
-		if (this.controlsAjax.firstName.isStalenessOf()) {
+//		if (this.controlsAjax.firstName.isStalenessOf()) {
 			controlsAjax = new AdministrationPageUIMapAjax(login);
-		}
+//		}
 	}
-
+	
+	public void resetCreateNewUserLink(){
+		this.controlsAjax.createNewUser = Link.getByPartialLinkText("Create New User");
+	}
+	
 	public void deleteClick() {
+		resetTable();
+		System.out.println("Delete click");
 		this.controlsAjax.delete.click();
 		// this.controlsAlert = new Alert();
 	}
@@ -211,6 +227,7 @@ public class AdministrationPage {
 	// setters controlsAlert
 
 	public void alertAccept() {
+		Alert.accept();
 //		if (this.controlsAlert != null) {
 //		this.controlsAlert.click();
 //		this.controlsAlert = null;
@@ -220,6 +237,7 @@ public class AdministrationPage {
 	}
 
 	public void alertDismiss() {
+		Alert.dismiss();
 //		if (this.controlsAlert != null) {
 //			this.controlsAlert.click();
 //			this.controlsAlert = null;

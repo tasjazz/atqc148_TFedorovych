@@ -100,5 +100,12 @@ public final class WebDriverUtils {
 	public String getCurrentUrl() {
 		return getWebDriver().getCurrentUrl();
 	}
-
+	
+	public void acceptAlert(){
+		getWebDriver().switchTo().alert().accept();
+	}
+	
+	public void dismissAlert(){
+		getWebDriver().switchTo().alert().dismiss();
+	}
 }
